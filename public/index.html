@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leasing Dashboard</title>
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">Leasing Dashboard</div>
+  <nav class="tabs" role="tablist">
+    <button role="tab" data-tab="leasing" aria-selected="true">Leasing funnel</button>
+    <button role="tab" data-tab="rent" aria-selected="false">Rent roll &amp; renewals</button>
+    <button role="tab" data-tab="data" aria-selected="false">Data sources</button>
+  </nav>
+  <span id="mode" class="badge"></span>
+</header>
+
+<main>
+  <!-- LEASING -->
+  <section id="tab-leasing" class="tab">
+    <div class="filters">
+      <label>Period
+        <select id="days">
+          <option value="7" selected>Last 7 days</option>
+          <option value="14">Last 14 days</option>
+          <option value="30">Last 30 days</option>
+          <option value="90">Last 90 days</option>
+        </select>
+      </label>
+      <label>Building <select id="leasing-building"><option value="">All buildings</option></select></label>
+    </div>
+    <div class="kpis" id="leasing-kpis"></div>
+    <div class="grid2">
+      <div class="card"><h2>Weekly funnel, last 12 weeks</h2><div id="trend" class="chart"></div></div>
+      <div class="card"><h2>By building, selected period</h2><div id="by-building"></div></div>
+    </div>
+    <div class="grid2">
+      <div class="card"><h2>Vacant units</h2><div id="vacant"></div></div>
+      <div class="card"><h2>Becoming vacant (next 60 days)</h2><div id="upcoming"></div></div>
+    </div>
+    <div class="card"><h2>Zillow leads with activity in period</h2><div id="leads"></div></div>
+  </section>
+
+  <!-- RENT -->
+  <section id="tab-rent" class="tab" hidden>
+    <div class="filters">
+      <label>Building <select id="rent-building"><option value="">All buildings</option></select></label>
+      <label>Max renewal raise
+        <select id="cap">
+          <option>3</option><option>4</option><option selected>5</option><option>6</option><option>8</option><option>10</option>
+        </select> %
+      </label>
+    </div>
+    <div class="kpis" id="rent-kpis"></div>
+    <div class="card"><h2>Rent roll by building</h2><div id="rent-roll"></div></div>
+    <div class="card"><h2>Monthly rent added through renewals, by building</h2><div id="raises" class="chart"></div><div id="raises-table"></div></div>
+    <div class="card"><h2>Leases up for renewal</h2><p class="muted" id="renew-note"></p><div id="renewals"></div></div>
+  </section>
+
+  <!-- DATA -->
+  <section id="tab-data" class="tab" hidden>
+    <div class="card">
+      <h2>Connection status</h2>
+      <div id="status"></div>
+      <div class="row">
+        <button id="sync">Sync AppFolio now</button>
+        <button id="reset" class="ghost">Clear imported data (back to demo)</button>
+      </div>
+      <p id="sync-msg" class="muted"></p>
+    </div>
+    <div class="card">
+      <h2>Import a CSV export</h2>
+      <p class="muted">Use this for any source without an API connection. Each import replaces that dataset.</p>
+      <div class="row">
+        <select id="import-type">
+          <option value="zillow_leads">Zillow Rental Manager: leads export</option>
+          <option value="screenings">Screening / credit check results</option>
+          <option value="appfolio_rent_roll">AppFolio: Rent Roll report</option>
+          <option value="appfolio_tenants">AppFolio: Tenant Directory (move-ins)</option>
+          <option value="appfolio_renewals">AppFolio: Renewal Summary / lease history</option>
+          <option value="appfolio_guest_cards">AppFolio: Guest Card Inquiries</option>
+        </select>
+        <input type="file" id="import-file" accept=".csv,text/csv">
+        <button id="import-go">Import</button>
+      </div>
+      <p id="import-msg" class="muted"></p>
+    </div>
+  </section>
+</main>
+<div id="tip" class="tip" hidden></div>
+<script type="module" src="/app.js"></script>
+</body>
+</html>
